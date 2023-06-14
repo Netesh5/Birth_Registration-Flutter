@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "823898404946",
+    "project_id": "birthregistration-b7691",
+    "storage_bucket": "birthregistration-b7691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823898404946:android:d9b0125fb8deac76bc078b",
+        "android_client_info": {
+          "package_name": "com.example.birthregistration"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823898404946-ejdb6btthodq30j5dvi3aaqd00tm59pi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAfzt2-lysv1E1DSctf5g3UwbARva11wzA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823898404946-ejdb6btthodq30j5dvi3aaqd00tm59pi.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
