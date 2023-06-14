@@ -54,11 +54,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const SizedBox(
                   width: 100,
                 ),
-                Text(dateTime),
+                Text(
+                  dateTime,
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
                 const SizedBox(
                   width: 20,
                 ),
-                const Text(AppString.welcome)
+                const Text(
+                  AppString.welcome,
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )
               ],
             )
           ],

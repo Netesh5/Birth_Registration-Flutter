@@ -20,7 +20,7 @@ class AppTheme {
       focusColor: Colors.white,
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(5),
-        borderSide: const BorderSide(color: Colors.white),
+        borderSide: const BorderSide(color: Colors.green),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: const BorderSide(color: Colors.white),

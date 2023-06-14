@@ -1,6 +1,6 @@
 import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
-import 'package:birthregistration/core/constants/textform_field.dart';
+import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/routes/routes_constant.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -73,7 +73,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         isPasswordFormField: false,
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       CustomTextFormFiled(
                         title: "Password",
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         isPasswordFormField: true,
                       ),
                       const SizedBox(
-                        height: 50,
+                        height: 30,
                       ),
                       SizedBox(
                         width: 300,
@@ -107,7 +107,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(color: Colors.black),
                         ),
                         TextSpan(
-                          recognizer: TapGestureRecognizer()..onTap = () {},
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              context.pushReplacementNamed(
+                                  RouteConstant.registerScreen);
+                            },
                           text: "Register Now",
                           style:
                               const TextStyle(color: Colors.deepPurpleAccent),

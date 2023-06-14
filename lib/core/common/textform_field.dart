@@ -28,6 +28,9 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        SizedBox(
+          height: widget.spacing,
+        ),
         Text(widget.title),
         SizedBox(
           height: widget.spacing,

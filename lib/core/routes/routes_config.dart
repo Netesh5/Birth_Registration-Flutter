@@ -2,7 +2,8 @@ import 'package:birthregistration/core/routes/routes_constant.dart';
 import 'package:birthregistration/features/errorpage/error_page.dart';
 import 'package:birthregistration/features/homepage/homepage.dart';
 import 'package:birthregistration/features/login/login_screen.dart';
-import 'package:birthregistration/features/registration/birth_registration_screen.dart';
+import 'package:birthregistration/features/birth_registration/birth_registration_screen.dart';
+import 'package:birthregistration/features/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ class AppRouter {
       routes: [
         GoRoute(
           name: RouteConstant.homeScreen,
-          path: "/",
+          path: "/home",
           pageBuilder: (context, state) {
             return const MaterialPage(child: HomeScreen());
           },
@@ -26,9 +27,16 @@ class AppRouter {
         ),
         GoRoute(
           name: RouteConstant.birthRegistrationScreen,
-          path: "/birth",
+          path: "/",
           pageBuilder: (context, state) {
             return const MaterialPage(child: BirthRegistrationScreen());
+          },
+        ),
+        GoRoute(
+          name: RouteConstant.registerScreen,
+          path: "/regsiter",
+          pageBuilder: (context, state) {
+            return const MaterialPage(child: RegisterScreen());
           },
         ),
       ],
