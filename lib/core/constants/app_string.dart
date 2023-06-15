@@ -36,4 +36,15 @@ class AppString {
   static const String enterVDC = "Enter VDC/Muncipality";
   static const String wardno = "Ward no";
   static const String enterWardno = "Enter Ward no";
+
+  static const String parentInfo = "Parent Information";
+
+  static const String father = "Father";
+  static const String mother = "Mother";
+
+  static const String country = "Country";
+
+  static const String occupation = "Occupation";
+  static const String religon = "Religion";
+  static const String motherTounge = "Mother Tounge";
 }
