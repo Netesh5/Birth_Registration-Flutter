@@ -8,11 +8,15 @@ class CustomTextFormFiled extends StatefulWidget {
       required this.hintText,
       required this.controller,
       required this.spacing,
-      required this.isPasswordFormField});
+      required this.isPasswordFormField,
+      this.ontap,
+      this.isreadOnly = false});
   final String title;
   final String hintText;
   final TextEditingController controller;
   final double spacing;
+  final Function()? ontap;
+  final bool? isreadOnly;
 
   final bool isPasswordFormField;
 
@@ -36,7 +40,9 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
           height: widget.spacing,
         ),
         TextFormField(
+          onTap: widget.ontap,
           controller: widget.controller,
+          readOnly: widget.isreadOnly ?? false,
           obscureText: widget.isPasswordFormField ? isObsureText : false,
           decoration: InputDecoration(
               hintText: widget.hintText,

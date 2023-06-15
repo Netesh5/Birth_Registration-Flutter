@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 extension DateTimeParsing on DateTime {
   String toWeekDayMonthWithTime() {
     final weekDays = [
@@ -31,5 +33,10 @@ extension DateTimeParsing on DateTime {
     final minute = this.minute.toString().padLeft(2, '0');
 
     return '$weekDay, $month $day, $year $hour:$minute';
+  }
+
+  String formatToNumericDate() {
+    final DateFormat formatter = DateFormat('yyyy-MM-dd');
+    return formatter.format(this);
   }
 }
