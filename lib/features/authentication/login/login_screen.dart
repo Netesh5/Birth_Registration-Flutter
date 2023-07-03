@@ -2,6 +2,7 @@ import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/routes/routes_constant.dart';
+import 'package:birthregistration/firebase_services/authentication/auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -16,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   late final TextEditingController emailController;
   late final TextEditingController passwordController;
+  final AuthService authService = AuthService();
 
   final formKey = GlobalKey<FormState>();
   @override
@@ -92,8 +94,10 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.deepPurpleAccent,
                             ontap: () {
                               if (formKey.currentState!.validate()) {
-                                context.pushReplacementNamed(
-                                    RouteConstant.birthRegistrationScreen);
+                                authService.loginUser(
+                                    context,
+                                    emailController.text.trim(),
+                                    passwordController.text.trim());
                               }
                             }),
                       ),

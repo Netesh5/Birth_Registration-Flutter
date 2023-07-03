@@ -1,6 +1,6 @@
 import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
-import 'package:birthregistration/firebase_services/authentication/firebase_register.dart';
+import 'package:birthregistration/firebase_services/authentication/auth.dart';
 
 import 'package:flutter/material.dart';
 

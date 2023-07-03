@@ -137,6 +137,7 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
         title: const Text(
           AppString.birthRegs,
           style: TextStyle(color: Colors.black),

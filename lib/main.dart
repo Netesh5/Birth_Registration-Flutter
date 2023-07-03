@@ -1,6 +1,6 @@
 import 'package:birthregistration/core/resources/theme.dart';
 import 'package:birthregistration/core/routes/routes_config.dart';
-import 'package:birthregistration/firebase_services/authentication/firebase_register.dart';
+import 'package:birthregistration/firebase_services/authentication/auth.dart';
 import 'package:birthregistration/firebase_services/database/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
