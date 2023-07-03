@@ -1,7 +1,11 @@
 import 'package:birthregistration/core/resources/theme.dart';
 import 'package:birthregistration/core/routes/routes_config.dart';
+import 'package:birthregistration/firebase_services/authentication/firebase_register.dart';
+import 'package:birthregistration/firebase_services/database/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -17,13 +21,24 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      theme: AppTheme.themeData,
-      debugShowCheckedModeBanner: false,
-      //  routeInformationParser: AppRouter.routes().routeInformationParser,
-      // routerDelegate: AppRouter.routes().routerDelegate,
-      // routeInformationProvider: AppRouter.routes().routeInformationProvider,
-      routerConfig: AppRouter.routes(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthService()),
+        ChangeNotifierProvider(create: (context) => FirestoreService()),
+        StreamProvider<User?>.value(
+          catchError: (_, __) => null,
+          value: AuthService().authState,
+          initialData: null,
+        ),
+      ],
+      child: MaterialApp.router(
+        theme: AppTheme.themeData,
+        debugShowCheckedModeBanner: false,
+        //  routeInformationParser: AppRouter.routes().routeInformationParser,
+        // routerDelegate: AppRouter.routes().routerDelegate,
+        // routeInformationProvider: AppRouter.routes().routeInformationProvider,
+        routerConfig: AppRouter.routes(),
+      ),
     );
   }
 }
