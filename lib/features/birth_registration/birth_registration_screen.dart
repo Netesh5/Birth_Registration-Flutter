@@ -5,11 +5,16 @@ import 'package:birthregistration/core/common/dropdown_formfield.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/extension/date_time.dart';
-import 'package:birthregistration/features/certificate_generator/certificate_generator.dart';
+
+import 'package:birthregistration/firebase_services/database/database.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BirthRegistrationScreen extends StatefulWidget {
-  const BirthRegistrationScreen({super.key});
+  const BirthRegistrationScreen({
+    super.key,
+  });
 
   @override
   State<BirthRegistrationScreen> createState() =>
@@ -33,6 +38,7 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
   late final TextEditingController motherDOBController;
   late final TextEditingController motherCountryController;
   final formKey = GlobalKey<FormState>();
+  final FirestoreService firestoreService = FirestoreService();
 
   @override
   void initState() {
@@ -135,6 +141,7 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<User?>(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -621,10 +628,47 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
                               title: "Create Birth Certificate",
                               color: Colors.deepPurpleAccent,
                               ontap: () {
-                                // if (formKey.currentState!.validate()) {
-                                //   BirthRegisterCreator().createPDF(context);
-                                // }
-                                BirthRegisterCreator().createPDF(context);
+                                if (formKey.currentState!.validate()) {
+                                  firestoreService.saveBirthDetail(
+                                      context: context,
+                                      user: user!,
+                                      firstname:
+                                          firstNameController.text.trim(),
+                                      middlename:
+                                          middleNameController.text.trim(),
+                                      lastname: lastNameController.text.trim(),
+                                      dob: dobController.text.trim(),
+                                      time: timeController.text.trim(),
+                                      birthSite: selectedValue,
+                                      gender: genderValue,
+                                      cast: castValue,
+                                      birthType: birthTypeValue,
+                                      weight: weightController.text.trim(),
+                                      address: addressController.text.trim(),
+                                      vdc: vcdController.text.trim(),
+                                      wardNo: wardController.text.trim(),
+                                      fatherName:
+                                          fatherNameController.text.trim(),
+                                      fatherDOB:
+                                          fatherDOBController.text.trim(),
+                                      fatherCountry:
+                                          fatherCountryController.text.trim(),
+                                      fatherOccupation: fatherOccupationValue,
+                                      fatherReligion: fatherReligionValue,
+                                      fatherMotherTounge:
+                                          fatherMotherToungeValue,
+                                      motherName:
+                                          motherNameController.text.trim(),
+                                      motherDOB:
+                                          motherDOBController.text.trim(),
+                                      motherCountry:
+                                          motherCountryController.text.trim(),
+                                      motherOccupation: motherOccupationValue,
+                                      motherReligion: motherReligionValue,
+                                      motherTounge: motherMotherToungeValue);
+                                  // BirthRegisterCreator().createPDF(context);
+                                }
+                                // BirthRegisterCreator().createPDF(context);
                               }),
                         ),
                       )

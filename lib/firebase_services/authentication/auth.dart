@@ -4,6 +4,7 @@ import 'package:birthregistration/firebase_services/database/database.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService with ChangeNotifier {
   FirebaseAuth firebaseAuth = FirebaseAuth.instance;
@@ -50,11 +51,15 @@ class AuthService with ChangeNotifier {
       UserCredential userCredential = await firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
       user = userCredential.user;
+
       if (user != null) {
+        String token = await userCredential.user!.getIdToken();
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString('token', token);
         // ignore: use_build_context_synchronously
         customSnackbar(context, "User logged in successfully");
         // ignore: use_build_context_synchronously
-        context.pushReplacementNamed(RouteConstant.birthRegistrationScreen);
+        context.pushReplacementNamed(RouteConstant.userProfileScreen);
       }
     } on FirebaseAuthException catch (e) {
       debugPrint(e.code);
@@ -62,10 +67,26 @@ class AuthService with ChangeNotifier {
       customSnackbar(context, errorMsg);
     }
   }
+
+  logout(BuildContext context) async {
+    try {
+      customSnackbar(context, "User logged out");
+      SharedPreferences pref = await SharedPreferences.getInstance();
+      await pref.remove("token");
+      await firebaseAuth.signOut();
+      // ignore: use_build_context_synchronously
+      context.pushReplacementNamed(RouteConstant.homeScreen);
+    } on FirebaseException catch (e) {
+      customSnackbar(context, e.message!);
+    }
+  }
 }
 
 String getMessageFromErrorCode(errorCode) {
   switch (errorCode) {
+    case "user-not-found":
+    case "unknown":
+      return "User not Register. Please Register account .";
     case "ERROR_EMAIL_ALREADY_IN_USE":
     case "account-exists-with-different-credential":
     case "email-already-in-use":
@@ -76,9 +97,6 @@ String getMessageFromErrorCode(errorCode) {
       return "Wrong email/password combination.";
 
     case "ERROR_USER_NOT_FOUND":
-    case "user-not-found":
-      return "No user found with this email.";
-
     case "ERROR_USER_DISABLED":
     case "user-disabled":
       return "User disabled.";

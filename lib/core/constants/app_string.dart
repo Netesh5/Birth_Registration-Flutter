@@ -3,6 +3,7 @@ class AppString {
   static const String navHeading2 =
       "Department of National ID and Civil Registration";
   static const String birthRegs = "Birth Registration";
+  static const String userProfile = "Profile";
   static const String welcome = "Welcome";
   static const String homeMinistry = "Home Ministry";
   static const String department =

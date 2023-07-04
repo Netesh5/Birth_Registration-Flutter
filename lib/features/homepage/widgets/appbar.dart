@@ -1,6 +1,9 @@
+import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/extension/date_time.dart';
+import 'package:birthregistration/core/routes/routes_constant.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({super.key, required this.height});
@@ -64,7 +67,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 const Text(
                   AppString.welcome,
                   style: TextStyle(fontWeight: FontWeight.bold),
-                )
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                CustomButton(
+                    title: "Login as Admin",
+                    color: Colors.green,
+                    ontap: () {
+                      context.pushNamed(RouteConstant.loginScreen);
+                    })
               ],
             )
           ],
