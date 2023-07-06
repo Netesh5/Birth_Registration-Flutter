@@ -6,6 +6,7 @@ import 'package:birthregistration/core/common/snack_bar.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/extension/date_time.dart';
+import 'package:birthregistration/core/routes/routes_constant.dart';
 import 'package:birthregistration/features/certificate_generator/certificate_generator.dart';
 
 import 'package:birthregistration/firebase_services/database/database.dart';
@@ -690,12 +691,17 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
                                                 motherMotherToungeValue);
 
                                         // ignore: use_build_context_synchronously
-                                        // await birthRegisterCreator
-                                        //     .uploadPDF(context,);
+                                        final url = await birthRegisterCreator
+                                            .uploadPDF(context,
+                                                "${firstNameController.text} ${lastNameController.text}");
 
                                         loadingProvider.setLoading(false);
                                         // ignore: use_build_context_synchronously
-                                        context.pop();
+                                        context.pushReplacementNamed(
+                                            RouteConstant.pdfviewer,
+                                            pathParameters: {"url": url});
+                                        // ignore: use_build_context_synchronously
+
                                         // ignore: use_build_context_synchronously
                                         customSnackbar(context,
                                             "Birth Certificate generated");
