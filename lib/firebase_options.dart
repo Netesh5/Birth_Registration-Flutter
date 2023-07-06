@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '823898404946',
     projectId: 'birthregistration-b7691',
     storageBucket: 'birthregistration-b7691.appspot.com',
-    iosClientId: '823898404946-kqrbjclfagvmv9i81g893073d5mnkpta.apps.googleusercontent.com',
+    iosClientId:
+        '823898404946-kqrbjclfagvmv9i81g893073d5mnkpta.apps.googleusercontent.com',
     iosBundleId: 'com.example.birthregistration',
   );
 }

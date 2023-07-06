@@ -7,11 +7,12 @@ import 'package:flutter/material.dart';
 class StorageServices {
   FirebaseStorage firebaseStorage = FirebaseStorage.instance;
 
-  Future<void> uploadFile(BuildContext context, List<int> file) async {
+  Future<String> uploadFile(BuildContext context, List<int> file) async {
     try {
       Reference storageReference = firebaseStorage
           .refFromURL("gs://birthregistration-b7691.appspot.com/")
-          .child("pdf/birthCertificate-${DateTime.now.toString()}.pdf");
+          .child(
+              "pdf/birthCertificate-${DateTime.now().microsecondsSinceEpoch}.pdf");
 
       //Uploading file
       UploadTask uploadTask = storageReference.putData(
@@ -23,8 +24,10 @@ class StorageServices {
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
       debugPrint("Download URL : $downloadUrl");
-    } on FirebaseException catch (e) {
-      customSnackbar(context, e.message!);
+      return downloadUrl;
+    } on Exception catch (e) {
+      customSnackbar(context, e.toString());
+      return "";
     }
   }
 

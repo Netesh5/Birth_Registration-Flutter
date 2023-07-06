@@ -4,6 +4,7 @@ import 'package:birthregistration/features/homepage/homepage.dart';
 import 'package:birthregistration/features/authentication/login/login_screen.dart';
 import 'package:birthregistration/features/birth_registration/birth_registration_screen.dart';
 import 'package:birthregistration/features/authentication/register/register.dart';
+import 'package:birthregistration/features/pdfviewer.dart/pdfviewer.dart';
 import 'package:birthregistration/features/userprofile/birth_detail.dart';
 import 'package:birthregistration/features/userprofile/user_profile.dart';
 import 'package:birthregistration/features/userprofile/user_profile_admin.dart';
@@ -80,6 +81,14 @@ class AppRouter {
               username: state.pathParameters["username"]!,
               uid: state.pathParameters["uid"]!,
             ));
+          },
+        ),
+        GoRoute(
+          name: RouteConstant.pdfviewer,
+          path: "/pdfviewer/:url",
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                child: PDFViewer(url: state.pathParameters["url"]!));
           },
         ),
       ],

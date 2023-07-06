@@ -1,8 +1,14 @@
+import 'package:birthregistration/core/common/circular_progress_indicator.dart';
 import 'package:birthregistration/core/common/divider.dart';
+import 'package:birthregistration/core/routes/routes_constant.dart';
+import 'package:birthregistration/features/certificate_generator/certificate_generator.dart';
+import 'package:birthregistration/provider/loading_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class BirthDetail extends StatelessWidget {
   const BirthDetail({super.key, required this.name});
@@ -20,16 +26,35 @@ class BirthDetail extends StatelessWidget {
         ),
         backgroundColor: Colors.grey.shade200,
         actions: [
-          TextButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.picture_as_pdf,
-                color: Colors.black,
-              ),
-              label: const Text(
-                "View Birth Certificate",
-                style: TextStyle(color: Colors.black),
-              ))
+          Consumer<LoadingProvider>(
+            builder: (context, loadingProvider, child) {
+              if (loadingProvider.isLoading) {
+                return const TextButton(
+                  onPressed: null,
+                  child: CustomCircularProgressIndicator(),
+                );
+              } else {
+                return TextButton.icon(
+                    onPressed: () async {
+                      loadingProvider.setLoading(true);
+                      final url =
+                          await BirthRegisterCreator().uploadPDF(context);
+                      loadingProvider.setLoading(false);
+                      // ignore: use_build_context_synchronously
+                      context.pushNamed(RouteConstant.pdfviewer,
+                          pathParameters: {"url": url});
+                    },
+                    icon: const Icon(
+                      Icons.picture_as_pdf,
+                      color: Colors.black,
+                    ),
+                    label: const Text(
+                      "View Birth Certificate",
+                      style: TextStyle(color: Colors.black),
+                    ));
+              }
+            },
+          )
         ],
       ),
       body: Container(
