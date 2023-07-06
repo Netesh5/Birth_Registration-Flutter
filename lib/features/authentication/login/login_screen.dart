@@ -3,9 +3,11 @@ import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/routes/routes_constant.dart';
 import 'package:birthregistration/firebase_services/authentication/auth.dart';
+import 'package:birthregistration/provider/loading_provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,6 +22,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final AuthService authService = AuthService();
 
   final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     emailController = TextEditingController();
@@ -89,17 +92,28 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       SizedBox(
                         width: 300,
-                        child: CustomButton(
-                            title: "Login",
-                            color: Colors.deepPurpleAccent,
-                            ontap: () {
-                              if (formKey.currentState!.validate()) {
-                                authService.loginUser(
-                                    context,
-                                    emailController.text.trim(),
-                                    passwordController.text.trim());
-                              }
-                            }),
+                        child: Consumer<LoadingProvider>(
+                          builder: (context, loadingProvider, child) {
+                            if (loadingProvider.isLoading) {
+                              return const CustomLoadingButton(
+                                  color: Colors.deepPurpleAccent);
+                            } else {
+                              return CustomButton(
+                                  title: "Login",
+                                  color: Colors.deepPurpleAccent,
+                                  ontap: () async {
+                                    if (formKey.currentState!.validate()) {
+                                      loadingProvider.setLoading(true);
+                                      await authService.loginUser(
+                                          context,
+                                          emailController.text.trim(),
+                                          passwordController.text.trim());
+                                      loadingProvider.setLoading(false);
+                                    }
+                                  });
+                            }
+                          },
+                        ),
                       ),
                       const SizedBox(
                         height: 50,

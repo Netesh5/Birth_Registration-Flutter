@@ -71,9 +71,11 @@ class AdminProfile extends StatelessWidget {
                           trailing:
                               const Icon(Icons.arrow_forward_ios_outlined),
                           onTap: () {
-                            context.pushNamed(
-                              RouteConstant.userProfileScreen,
-                            );
+                            context.pushNamed(RouteConstant.userProfileadmin,
+                                pathParameters: {
+                                  "username": result["fullname"],
+                                  "uid": result["id"]
+                                });
                           },
                         ),
                       );

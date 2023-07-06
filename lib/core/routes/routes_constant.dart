@@ -6,4 +6,5 @@ class RouteConstant {
   static String userProfileScreen = "userProfileScreen";
   static String wrapper = "wrapper";
   static String birthDetail = "birthDetail";
+  static String userProfileadmin = "userProfileadmin";
 }

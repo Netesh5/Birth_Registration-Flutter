@@ -6,6 +6,7 @@ import 'package:birthregistration/features/birth_registration/birth_registration
 import 'package:birthregistration/features/authentication/register/register.dart';
 import 'package:birthregistration/features/userprofile/birth_detail.dart';
 import 'package:birthregistration/features/userprofile/user_profile.dart';
+import 'package:birthregistration/features/userprofile/user_profile_admin.dart';
 import 'package:birthregistration/wrapper.dart';
 
 import 'package:flutter/material.dart';
@@ -50,7 +51,7 @@ class AppRouter {
           name: RouteConstant.userProfileScreen,
           path: "/profile",
           pageBuilder: (context, state) {
-            return MaterialPage(child: UserProfile());
+            return const MaterialPage(child: UserProfile());
           },
         ),
         GoRoute(
@@ -67,6 +68,17 @@ class AppRouter {
             return MaterialPage(
                 child: BirthDetail(
               name: state.pathParameters["name"]!,
+            ));
+          },
+        ),
+        GoRoute(
+          name: RouteConstant.userProfileadmin,
+          path: "/userprofileadmin/:username/:uid",
+          pageBuilder: (context, state) {
+            return MaterialPage(
+                child: UserProfileAdmin(
+              username: state.pathParameters["username"]!,
+              uid: state.pathParameters["uid"]!,
             ));
           },
         ),

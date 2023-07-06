@@ -2,13 +2,17 @@ import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/common/date_time_picker.dart';
 import 'package:birthregistration/core/common/divider.dart';
 import 'package:birthregistration/core/common/dropdown_formfield.dart';
+import 'package:birthregistration/core/common/snack_bar.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/core/constants/app_string.dart';
 import 'package:birthregistration/core/extension/date_time.dart';
+import 'package:birthregistration/features/certificate_generator/certificate_generator.dart';
 
 import 'package:birthregistration/firebase_services/database/database.dart';
+import 'package:birthregistration/provider/loading_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class BirthRegistrationScreen extends StatefulWidget {
@@ -39,6 +43,7 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
   late final TextEditingController motherCountryController;
   final formKey = GlobalKey<FormState>();
   final FirestoreService firestoreService = FirestoreService();
+  final BirthRegisterCreator birthRegisterCreator = BirthRegisterCreator();
 
   @override
   void initState() {
@@ -624,52 +629,81 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
                       Center(
                         child: SizedBox(
                           width: 400,
-                          child: CustomButton(
-                              title: "Create Birth Certificate",
-                              color: Colors.deepPurpleAccent,
-                              ontap: () {
-                                if (formKey.currentState!.validate()) {
-                                  firestoreService.saveBirthDetail(
-                                      context: context,
-                                      user: user!,
-                                      firstname:
-                                          firstNameController.text.trim(),
-                                      middlename:
-                                          middleNameController.text.trim(),
-                                      lastname: lastNameController.text.trim(),
-                                      dob: dobController.text.trim(),
-                                      time: timeController.text.trim(),
-                                      birthSite: selectedValue,
-                                      gender: genderValue,
-                                      cast: castValue,
-                                      birthType: birthTypeValue,
-                                      weight: weightController.text.trim(),
-                                      address: addressController.text.trim(),
-                                      vdc: vcdController.text.trim(),
-                                      wardNo: wardController.text.trim(),
-                                      fatherName:
-                                          fatherNameController.text.trim(),
-                                      fatherDOB:
-                                          fatherDOBController.text.trim(),
-                                      fatherCountry:
-                                          fatherCountryController.text.trim(),
-                                      fatherOccupation: fatherOccupationValue,
-                                      fatherReligion: fatherReligionValue,
-                                      fatherMotherTounge:
-                                          fatherMotherToungeValue,
-                                      motherName:
-                                          motherNameController.text.trim(),
-                                      motherDOB:
-                                          motherDOBController.text.trim(),
-                                      motherCountry:
-                                          motherCountryController.text.trim(),
-                                      motherOccupation: motherOccupationValue,
-                                      motherReligion: motherReligionValue,
-                                      motherTounge: motherMotherToungeValue);
-                                  // BirthRegisterCreator().createPDF(context);
-                                }
-                                // BirthRegisterCreator().createPDF(context);
-                              }),
+                          child: Consumer<LoadingProvider>(
+                            builder: (context, loadingProvider, child) {
+                              if (loadingProvider.isLoading) {
+                                return const CustomLoadingButton(
+                                  color: Colors.deepPurpleAccent,
+                                );
+                              } else {
+                                return CustomButton(
+                                    title: "Create Birth Certificate",
+                                    color: Colors.deepPurpleAccent,
+                                    ontap: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        loadingProvider.setLoading(true);
+                                        await firestoreService.saveBirthDetail(
+                                            context: context,
+                                            user: user!,
+                                            firstname:
+                                                firstNameController.text.trim(),
+                                            middlename: middleNameController.text
+                                                .trim(),
+                                            lastname:
+                                                lastNameController.text.trim(),
+                                            dob: dobController.text.trim(),
+                                            time: timeController.text.trim(),
+                                            birthSite: selectedValue,
+                                            gender: genderValue,
+                                            cast: castValue,
+                                            birthType: birthTypeValue,
+                                            weight:
+                                                weightController.text.trim(),
+                                            address:
+                                                addressController.text.trim(),
+                                            vdc: vcdController.text.trim(),
+                                            wardNo: wardController.text.trim(),
+                                            fatherName: fatherNameController.text
+                                                .trim(),
+                                            fatherDOB:
+                                                fatherDOBController.text.trim(),
+                                            fatherCountry:
+                                                fatherCountryController.text
+                                                    .trim(),
+                                            fatherOccupation:
+                                                fatherOccupationValue,
+                                            fatherReligion: fatherReligionValue,
+                                            fatherMotherTounge:
+                                                fatherMotherToungeValue,
+                                            motherName: motherNameController
+                                                .text
+                                                .trim(),
+                                            motherDOB:
+                                                motherDOBController.text.trim(),
+                                            motherCountry:
+                                                motherCountryController.text
+                                                    .trim(),
+                                            motherOccupation:
+                                                motherOccupationValue,
+                                            motherReligion: motherReligionValue,
+                                            motherTounge:
+                                                motherMotherToungeValue);
+
+                                        // ignore: use_build_context_synchronously
+                                        await birthRegisterCreator
+                                            .uploadPDF(context);
+
+                                        loadingProvider.setLoading(false);
+                                        // ignore: use_build_context_synchronously
+                                        context.pop();
+                                        // ignore: use_build_context_synchronously
+                                        customSnackbar(context,
+                                            "Birth Certificate generated");
+                                      }
+                                    });
+                              }
+                            },
+                          ),
                         ),
                       )
                     ],

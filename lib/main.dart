@@ -2,6 +2,7 @@ import 'package:birthregistration/core/resources/theme.dart';
 import 'package:birthregistration/core/routes/routes_config.dart';
 import 'package:birthregistration/firebase_services/authentication/auth.dart';
 import 'package:birthregistration/firebase_services/database/database.dart';
+import 'package:birthregistration/provider/loading_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => AuthService()),
         ChangeNotifierProvider(create: (context) => FirestoreService()),
+        ChangeNotifierProvider(create: (context) => LoadingProvider()),
         StreamProvider<User?>.value(
           catchError: (_, __) => null,
           value: AuthService().authState,

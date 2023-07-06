@@ -1,8 +1,10 @@
 import 'package:birthregistration/core/common/custom_button.dart';
 import 'package:birthregistration/core/common/textform_field.dart';
 import 'package:birthregistration/firebase_services/authentication/auth.dart';
+import 'package:birthregistration/provider/loading_provider.dart';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -115,20 +117,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                         SizedBox(
                           width: 300,
-                          child: CustomButton(
-                              title: "Register",
-                              color: Colors.deepPurpleAccent,
-                              ontap: () async {
-                                if (formKey.currentState!.validate()) {
-                                  await authService.registerUser(
-                                      context: context,
-                                      email: emailController.text.trim(),
-                                      password: passwordController.text.trim(),
-                                      fullname: fullnameController.text.trim(),
-                                      location: locationController.text.trim(),
-                                      phone: phoneController.text.trim());
-                                }
-                              }),
+                          child: Consumer<LoadingProvider>(
+                            builder: (context, loadingProvider, child) {
+                              if (loadingProvider.isLoading) {
+                                return const CustomLoadingButton(
+                                    color: Colors.deepPurpleAccent);
+                              } else {
+                                return CustomButton(
+                                    title: "Register",
+                                    color: Colors.deepPurpleAccent,
+                                    ontap: () async {
+                                      if (formKey.currentState!.validate()) {
+                                        loadingProvider.setLoading(true);
+                                        await authService.registerUser(
+                                            context: context,
+                                            email: emailController.text.trim(),
+                                            password:
+                                                passwordController.text.trim(),
+                                            fullname:
+                                                fullnameController.text.trim(),
+                                            location:
+                                                locationController.text.trim(),
+                                            phone: phoneController.text.trim());
+                                        loadingProvider.setLoading(false);
+                                      }
+                                    });
+                              }
+                            },
+                          ),
                         )
                       ],
                     ),
