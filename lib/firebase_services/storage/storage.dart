@@ -24,6 +24,8 @@ class StorageServices {
       String downloadUrl = await taskSnapshot.ref.getDownloadURL();
 
       debugPrint("Download URL : $downloadUrl");
+
+      // html.window.open(downloadUrl, "_blank");
       return downloadUrl;
     } on Exception catch (e) {
       customSnackbar(context, e.toString());

@@ -690,8 +690,8 @@ class _BirthRegistrationScreenState extends State<BirthRegistrationScreen> {
                                                 motherMotherToungeValue);
 
                                         // ignore: use_build_context_synchronously
-                                        await birthRegisterCreator
-                                            .uploadPDF(context);
+                                        // await birthRegisterCreator
+                                        //     .uploadPDF(context,);
 
                                         loadingProvider.setLoading(false);
                                         // ignore: use_build_context_synchronously

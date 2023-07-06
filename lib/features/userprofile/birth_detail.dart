@@ -38,7 +38,7 @@ class BirthDetail extends StatelessWidget {
                     onPressed: () async {
                       loadingProvider.setLoading(true);
                       final url =
-                          await BirthRegisterCreator().uploadPDF(context);
+                          await BirthRegisterCreator().uploadPDF(context, name);
                       loadingProvider.setLoading(false);
                       // ignore: use_build_context_synchronously
                       context.pushNamed(RouteConstant.pdfviewer,
