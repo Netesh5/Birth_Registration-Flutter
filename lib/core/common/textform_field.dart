@@ -48,6 +48,7 @@ class _CustomTextFormFiledState extends State<CustomTextFormFiled> {
           controller: widget.controller,
           readOnly: widget.isreadOnly ?? false,
           obscureText: widget.isPasswordFormField ? isObsureText : false,
+          textInputAction: TextInputAction.next,
           decoration: InputDecoration(
               hintText: widget.hintText,
               suffixIcon: widget.isPasswordFormField
