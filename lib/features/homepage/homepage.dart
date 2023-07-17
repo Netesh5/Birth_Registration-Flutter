@@ -10,7 +10,6 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const CustomAppBar(
         height: 90,
@@ -22,23 +21,25 @@ class HomeScreen extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.grey.shade200,
               borderRadius: BorderRadius.circular(20)),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth > 600) {
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Image.asset(
-                      "assets/images/nepal_logo.png",
-                      height: 100,
-                    ),
-                    const SizedBox(
-                      height: 20,
-                      width: 50,
-                    ),
-                    size > 600
-                        ? Column(
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            "assets/images/nepal_logo.png",
+                            height: 100,
+                          ),
+                          const SizedBox(
+                            height: 20,
+                            width: 50,
+                          ),
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               const Text(
@@ -73,49 +74,82 @@ class HomeScreen extends StatelessWidget {
                               )
                             ],
                           )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text(
-                                AppString.homeMinistry,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              const Text(
-                                AppString.department,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              const Text(
-                                AppString.location,
-                                style: TextStyle(fontSize: 12),
-                              ),
-                              const SizedBox(
-                                height: 30,
-                              ),
-                              const Text(
-                                AppString.welcome,
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(
-                                height: 50,
-                              ),
-                              CustomButton(
-                                title: AppString.event,
-                                color: Colors.deepPurpleAccent,
-                                ontap: () {
-                                  context.pushNamed(RouteConstant.loginScreen);
-                                },
-                              )
-                            ],
-                          )
+                        ],
+                      ),
+                    ),
+                    Image.asset(
+                      "assets/images/family.png",
+                      height: MediaQuery.of(context).size.height * 0.6,
+                    )
                   ],
-                ),
-              ),
-              Image.asset(
-                "assets/images/family.png",
-                height: MediaQuery.of(context).size.height * 0.6,
-              )
-            ],
+                );
+              } else {
+                return Column(
+                  children: [
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Text(
+                      AppString.birthRegs,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Image.asset(
+                      "assets/images/nepal_logo.png",
+                      height: 100,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                      width: 50,
+                    ),
+                    Column(
+                      children: [
+                        const Text(
+                          AppString.homeMinistry,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        const Padding(
+                          padding: EdgeInsets.all(20.0),
+                          child: Text(
+                            AppString.department,
+                            style: TextStyle(
+                                fontSize: 18, overflow: TextOverflow.ellipsis),
+                          ),
+                        ),
+                        const Text(
+                          AppString.location,
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                        const Text(
+                          AppString.welcome,
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(
+                          height: 200,
+                        ),
+                        CustomButton(
+                          title: AppString.event,
+                          color: Colors.deepPurpleAccent,
+                          ontap: () {
+                            context.pushNamed(RouteConstant.loginScreen);
+                          },
+                        ),
+                        const SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    )
+                  ],
+                );
+              }
+            },
           ),
         ),
       ),

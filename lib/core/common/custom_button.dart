@@ -18,7 +18,10 @@ class CustomButton extends StatelessWidget {
         onPressed: ontap,
         style: ButtonStyle(
             backgroundColor: MaterialStateColor.resolveWith((states) => color)),
-        child: Text(title),
+        child: Text(
+          title,
+          style: const TextStyle(color: Colors.white),
+        ),
       ),
     );
   }

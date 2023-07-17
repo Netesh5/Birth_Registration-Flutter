@@ -39,6 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(color: Colors.black),
@@ -52,7 +53,9 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: const EdgeInsets.all(20),
           child: Container(
-              width: MediaQuery.of(context).size.width * 0.4,
+              width: size > 600
+                  ? MediaQuery.of(context).size.width * 0.4
+                  : MediaQuery.of(context).size.width * 0.9,
               // height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
                   color: Colors.grey.shade200,
