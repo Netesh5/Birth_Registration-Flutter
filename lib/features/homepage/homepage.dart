@@ -10,6 +10,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: const CustomAppBar(
         height: 90,
@@ -36,41 +37,77 @@ class HomeScreen extends StatelessWidget {
                       height: 20,
                       width: 50,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          AppString.homeMinistry,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const Text(
-                          AppString.department,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const Text(
-                          AppString.location,
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        ),
-                        const Text(
-                          AppString.welcome,
-                          style: TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 50,
-                        ),
-                        CustomButton(
-                          title: AppString.event,
-                          color: Colors.deepPurpleAccent,
-                          ontap: () {
-                            context.pushNamed(RouteConstant.loginScreen);
-                          },
-                        )
-                      ],
-                    )
+                    size > 600
+                        ? Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                AppString.homeMinistry,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const Text(
+                                AppString.department,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const Text(
+                                AppString.location,
+                                style: TextStyle(fontSize: 18),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const Text(
+                                AppString.welcome,
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              CustomButton(
+                                title: AppString.event,
+                                color: Colors.deepPurpleAccent,
+                                ontap: () {
+                                  context.pushNamed(RouteConstant.loginScreen);
+                                },
+                              )
+                            ],
+                          )
+                        : Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Text(
+                                AppString.homeMinistry,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              const Text(
+                                AppString.department,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              const Text(
+                                AppString.location,
+                                style: TextStyle(fontSize: 12),
+                              ),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const Text(
+                                AppString.welcome,
+                                style: TextStyle(
+                                    fontSize: 12, fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(
+                                height: 50,
+                              ),
+                              CustomButton(
+                                title: AppString.event,
+                                color: Colors.deepPurpleAccent,
+                                ontap: () {
+                                  context.pushNamed(RouteConstant.loginScreen);
+                                },
+                              )
+                            ],
+                          )
                   ],
                 ),
               ),
