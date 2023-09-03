@@ -145,11 +145,32 @@ class HomeScreen extends StatelessWidget {
                           height: 50,
                         ),
                       ],
-                    )
+                    ),
                   ],
                 );
               }
             },
+          ),
+        ),
+      ),
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
+          width: double.infinity,
+          child: const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("(C) Department of National Id and Civil Registration "),
+                Text("Contact \nEmail : xyz@gmail.com \nPhone : 9876543210"),
+                SizedBox(
+                  height: 50,
+                )
+              ],
+            ),
           ),
         ),
       ),
