@@ -159,17 +159,40 @@ class HomeScreen extends StatelessWidget {
           decoration: BoxDecoration(
               color: Colors.grey[200], borderRadius: BorderRadius.circular(12)),
           width: double.infinity,
-          child: const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("(C) Department of National Id and Civil Registration "),
-                Text("Contact \nEmail : xyz@gmail.com \nPhone : 9876543210"),
-                SizedBox(
-                  height: 50,
-                )
-              ],
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                if (constraints.maxWidth > 600) {
+                  return const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                          "(C) Department of National Id and Civil Registration "),
+                      Text(
+                          "Contact \nEmail : xyz@gmail.com \nPhone : 9876543210"),
+                      SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  );
+                } else {
+                  return const Column(
+                    children: [
+                      Text(
+                          "(C) Department of National Id and Civil Registration "),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                          "Contact \nEmail : xyz@gmail.com \nPhone : 9876543210"),
+                      SizedBox(
+                        height: 50,
+                      )
+                    ],
+                  );
+                }
+              },
             ),
           ),
         ),
